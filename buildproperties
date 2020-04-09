@@ -1,0 +1,40 @@
+#!/bin/bash
+
+echo "Properties defined in build.properties"
+echo "changeType = ${changeType}"
+echo "apicOldProduct = ${apicOldProduct}"
+
+echo "Set environment property to the environment the component version will be deployed on"
+if [[ ${changeType} == "major" || ${changeType}  == "minor" ]]; then
+environment="sandbox"
+elif [[ ${changeType} == "bugfix" ]]; then
+environment="uat"
+else
+echo "Invalid values provided in build.properties."
+exit 1
+fi
+
+echo "Determine if this is the first deployment"
+if [[ ${apicOldProduct} == "" ]]; then
+firstDeploy="true"
+else
+firstDeploy="false"
+fi
+
+echo "Process API Product def yaml for name and version"
+apicNewProductName=$(cat acme-bank-product.yaml | shyaml get-value info.name)
+echo "apicNewProductName = ${apicNewProductName}"
+apicNewProductVersion=$(cat acme-bank-product.yaml | shyaml get-value info.version)
+echo "apicNewProductName = ${apicNewProductVersion}"
+apicNewProductPlan=$(cat acme-bank-product.yaml | shyaml get-value plans.default.title)
+echo "apicNewProductName = ${apicNewProductPlan}"
+compVersion=${apicNewProductName}:${apicNewProductVersion}
+
+echo "Output properties to temp.properties:" 
+echo "environment=${environment}" > temp.properties
+echo "firstDeploy=${firstDeploy}" >> temp.properties
+echo "compVersion=${compVersion}" >> temp.properties
+
+
+
+

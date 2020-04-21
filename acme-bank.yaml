@@ -1100,19 +1100,19 @@ x-ibm-configuration:
   enforced: true
   cors:
     enabled: true
+  gateway: datapower-gateway
   catalogs:
-    apic-dev:
+    sandbox:
       properties:
-        runtime-url: $(TARGET_URL)
-    sb:
-      properties:
-        runtime-url: >-
-          https://apiconnect-111e3311-f13b-4f4a-8f8a-86043b5020c4.hollisccaibmcom-hybrid-cloud-devops-sandbox.apic.mybluemix.net
-        invoke-tls-profile: 'client:Loopback-client'
+        runtime-url: https://mgmt.icp-proxy.apps.cluster-c6f6.c6f6.sandbox1266.opentlc.com
+		invoke-tls-profile: 'client:Loopback-client'
     uat:
       properties:
-        runtime-url: >-
-          https://apiconnect-b3072e60-c3f4-45e9-8f14-2344bacf26bf.hollisccaibmcom-hybrid-cloud-devops-uat.apic.mybluemix.net
+        runtime-url: https://mgmt.icp-proxy.apps.cluster-c6f6.c6f6.sandbox1266.opentlc.com
+        invoke-tls-profile: 'client:Loopback-client'
+    prod:
+      properties:
+        runtime-url: https://mgmt.icp-proxy.apps.cluster-c6f6.c6f6.sandbox1266.opentlc.com
         invoke-tls-profile: 'client:Loopback-client'
   assembly:
     execute:
